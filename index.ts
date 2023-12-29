@@ -103,14 +103,17 @@ app.get("/search", async (req, res) => {
 
   const geniusSongs: GeniusSong[] = searches.map((song) => mapSong(song));
 
-  res.send(geniusSongs);
+  res.json({
+    results: geniusSongs,
+    count: geniusSongs.length,
+  });
 });
 
 app.get("/song/:songId", async (req, res) => {
   const songId = Number.parseInt(req.params.songId);
   const song = await Client.songs.get(songId);
 
-  res.send(mapSong(song));
+  res.json(mapSong(song));
 });
 
 app.get("/lyrics/:songId", async (req, res) => {
